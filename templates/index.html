@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e8efeb">
+  <title>Fieldnote Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="calculator" aria-label="Calculator">
+    <header class="calculator-header">
+      <div class="brand-mark" aria-hidden="true">＋</div>
+      <div>
+        <p class="eyebrow">EVERYDAY ARITHMETIC</p>
+        <h1>Calculator</h1>
+      </div>
+      <span class="status-dot" aria-label="Ready"></span>
+    </header>
+
+    <form method="post" class="calculator-form">
+      <input type="hidden" name="expression" value="{{ expression }}">
+      <input type="hidden" name="answer" value="{{ answer }}">
+      <input type="hidden" name="evaluated" value="{{ 'true' if evaluated else 'false' }}">
+
+      <section class="display" aria-live="polite" aria-label="Calculator display">
+        <p class="display-caption">
+          {% if answer %}{{ expression }} ={% else %}EXPRESSION{% endif %}
+        </p>
+        <output class="display-value">{{ answer or expression or '0' }}</output>
+      </section>
+
+      <div class="keypad" aria-label="Calculator keys">
+        <button class="key key-function" type="submit" name="action" value="clear">AC</button>
+        <button class="key key-function" type="submit" name="action" value="delete" aria-label="Delete last character">DEL</button>
+        <button class="key key-function" type="submit" name="action" value="(">(</button>
+        <button class="key key-function" type="submit" name="action" value=")">)</button>
+
+        <button class="key" type="submit" name="action" value="7">7</button>
+        <button class="key" type="submit" name="action" value="8">8</button>
+        <button class="key" type="submit" name="action" value="9">9</button>
+        <button class="key key-operator" type="submit" name="action" value="/" aria-label="Divide">÷</button>
+
+        <button class="key" type="submit" name="action" value="4">4</button>
+        <button class="key" type="submit" name="action" value="5">5</button>
+        <button class="key" type="submit" name="action" value="6">6</button>
+        <button class="key key-operator" type="submit" name="action" value="*" aria-label="Multiply">×</button>
+
+        <button class="key" type="submit" name="action" value="1">1</button>
+        <button class="key" type="submit" name="action" value="2">2</button>
+        <button class="key" type="submit" name="action" value="3">3</button>
+        <button class="key key-operator" type="submit" name="action" value="-" aria-label="Subtract">−</button>
+
+        <button class="key key-zero" type="submit" name="action" value="0">0</button>
+        <button class="key" type="submit" name="action" value=".">.</button>
+        <button class="key key-operator" type="submit" name="action" value="^" aria-label="Exponent">x<sup>y</sup></button>
+        <button class="key key-operator" type="submit" name="action" value="+" aria-label="Add">+</button>
+
+        <button class="key key-equals" type="submit" name="action" value="equals">=</button>
+      </div>
+
+      <p class="message" role="status">{{ error or '&nbsp;'|safe }}</p>
+    </form>
+    <footer class="calculator-footer"><span>FLASK · NO JAVASCRIPT</span><span>DECIMAL · PARENTHESES · POWERS</span></footer>
+  </main>
+</body>
+</html>
